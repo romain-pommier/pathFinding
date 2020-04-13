@@ -1,3 +1,16 @@
+
+
+let play = true;
+let cols = 100;
+let rows = 100;
+let grid = [cols, rows];
+let openSet = [];
+let closedSet = [];
+let start;
+let end;
+let w, h;
+let path = [];
+
 function removeFromArray(arr, elt) {
     for (let i = arr.length - 1; i >= 0; i--) {
         if (arr[i] == elt) {
@@ -8,21 +21,9 @@ function removeFromArray(arr, elt) {
 
 function heuristic(a, b) {
     let d = dist(a.i, a.j, b.i, b.j)
-        // let d = abs(a.i - b.i) + abs(a.j - b.j);
+    // let d = abs(a.i - b.i) + abs(a.j - b.j);
     return d
 }
-
-let cols = 80;
-let rows = 80;
-let grid = new Array(cols, rows);
-
-let openSet = [];
-let closedSet = [];
-let start;
-let end;
-let w, h;
-let path = [];
-
 
 function Spot(i, j) {
     this.i = i;
@@ -34,11 +35,11 @@ function Spot(i, j) {
     this.previous = undefined;
     this.wall = false;
 
-    if (random(1) < 0.42) {
+    if (random(1) < 0.5) {
         this.wall = true
     }
 
-    this.show = function(col) {
+    this.show = function (col) {
         fill(col);
         if (this.wall) {
             fill(0)
@@ -46,7 +47,7 @@ function Spot(i, j) {
         noStroke();
         rect(this.i * w, this.j * h, w - 1, h - 1);
     }
-    this.addNeighbors = function(grid) {
+    this.addNeighbors = function (grid) {
         let i = this.i;
         let j = this.j;
 
@@ -78,7 +79,27 @@ function Spot(i, j) {
 }
 
 function setup() {
-    createCanvas(900, 900);
+
+    let button = createButton("reset");
+    button.mousePressed(reset)
+    createCanvas(800, 800);
+    console.log('setup')
+    reset()
+}
+function reset() {
+    createCanvas(800, 800);
+    play = false;
+    cols = 100;
+    rows = 100;
+    grid = [cols, rows];
+    openSet = [];
+    closedSet = [];
+    start;
+    end;
+    w, h;
+    path = [];
+
+    console.log('setup')
 
     w = width / cols;
     h = height / rows;
@@ -105,11 +126,10 @@ function setup() {
     end.wall = false
 
     openSet.push(start);
-
-    console.log(grid);
 }
 
 function draw() {
+    console.log('draw')
     if (openSet.length > 0) {
         let winner = 0;
         for (let i = 0; i < openSet.length; i++) {
@@ -117,6 +137,7 @@ function draw() {
                 winner = i
             }
         }
+        current = null
         var current = openSet[winner];
 
         if (current === end) {
@@ -155,6 +176,7 @@ function draw() {
         console.log('no solution')
         noLoop()
         return
+
     }
     background(204)
     for (let i = 0; i < cols; i++) {
