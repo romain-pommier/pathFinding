@@ -35,7 +35,7 @@ function Spot(i, j) {
     this.previous = undefined;
     this.wall = false;
 
-    if (random(1) < 0.5) {
+    if (random(1) < 0.25) {
         this.wall = true
     }
 
@@ -82,11 +82,11 @@ function setup() {
 
     let button = createButton("reset");
     button.mousePressed(reset)
-    createCanvas(800, 800);
     console.log('setup')
     reset()
 }
 function reset() {
+    loop()
     createCanvas(800, 800);
     play = false;
     cols = 100;
@@ -129,7 +129,7 @@ function reset() {
 }
 
 function draw() {
-    console.log('draw')
+
     if (openSet.length > 0) {
         let winner = 0;
         for (let i = 0; i < openSet.length; i++) {
@@ -141,8 +141,9 @@ function draw() {
         var current = openSet[winner];
 
         if (current === end) {
-            noLoop();
             console.log('DONE!!');
+            noLoop()
+
         }
         removeFromArray(openSet, current);
         closedSet.push(current);
@@ -203,5 +204,6 @@ function draw() {
     for (let i = 0; i < path.length; i++) {
         path[i].show(color(0, 0, 255))
     }
+    return
 
 }
