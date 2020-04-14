@@ -81,13 +81,16 @@ function Spot(i, j) {
 function setup() {
 
     let button = createButton("reset");
+    button.position(19, 19);
+    let button2 = document.getElementById('reset')
+    console.log(button)
     button.mousePressed(reset)
     console.log('setup')
     reset()
 }
 function reset() {
     loop()
-    createCanvas(800, 800);
+    createCanvas(800, 800).position(10, 50);
     play = false;
     cols = 100;
     rows = 100;
