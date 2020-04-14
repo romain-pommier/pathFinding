@@ -81,9 +81,13 @@ function Spot(i, j) {
 function setup() {
 
     let button = createButton("reset");
-    button.position(19, 19);
-    let button2 = document.getElementById('reset')
-    console.log(button)
+    button.position(19, 21);
+
+    let label = createElement('label', 'height :')
+    label.position(100, 5);
+
+    input = createInput();
+    input.position(100, 21);
     button.mousePressed(reset)
     console.log('setup')
     reset()
